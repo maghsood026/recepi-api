@@ -13,10 +13,11 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None):
-        user = self.create_user(email, password)
-        user.is_staff = True
-        user.is_superuser = True
-        return user
+        user_admin = self.create_user(email, password)
+        user_admin.is_staff = True
+        user_admin.is_superuser = True
+        user_admin.save(using=self._db)
+        return user_admin
 
 
 class User(AbstractUser, PermissionsMixin):
